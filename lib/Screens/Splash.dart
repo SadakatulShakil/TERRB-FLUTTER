@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_project/HomeScreen.dart';
+import 'package:flutter_project/Screens/HomeScreen.dart';
 import 'package:progress_indicators/progress_indicators.dart';
 
 class Splash extends StatefulWidget{

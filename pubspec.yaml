@@ -28,8 +28,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   progress_indicators: ^1.0.0
+  font_awesome_flutter: ^9.2.0
   flutter:
     sdk: flutter
+
 
 
   # The following adds the Cupertino Icons font to your application.
