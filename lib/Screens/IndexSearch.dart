@@ -1,4 +1,7 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Api/UserResponse/single_user_entity.dart';
+import 'package:flutter_project/Api/http_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class IndexSearch extends StatefulWidget {
@@ -9,6 +12,8 @@ class IndexSearch extends StatefulWidget {
 
 class InitState extends State<IndexSearch> {
   TextEditingController nameController = TextEditingController();
+  late HttpService httpService;
+  late Dio dio = new Dio();
   @override
   Widget build(BuildContext context) {
     return initWidget();
@@ -55,6 +60,11 @@ class InitState extends State<IndexSearch> {
 
                         onPressed: (){
                           showToastMessage("Need to implement");
+                          httpService = HttpService();
+                          getUser();
+                          postData();
+                          getApiData("new");
+
                           /*if(type != null && doneBefore != null && doneBefore == 'no'){
                             //showToastMessage(type+" and "+doneBefore);
                             Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterWebView()));
@@ -89,4 +99,48 @@ class InitState extends State<IndexSearch> {
         fontSize: 16.0 //message font size
     );
   }
+
+  getApiData(String s) {
+
+  }
+  Future getUser() async  {
+    Response response;
+    try {
+      response = await httpService.getRequest("api/users/2");
+      print(response.statusCode.toString());
+      if(response.statusCode == 200){
+        setState(() {
+
+          SingleUserEntity singleUserEntity = SingleUserEntity.fromJson(response.data);
+          var data = singleUserEntity.toString();
+
+          print("New "'$data');
+
+        });
+      }else{
+        print("Something went wrong!");
+      }
+    } on Exception catch (e) {
+      print(e);
+    }
+  }
+  Future postData()async{
+    Dio dio = new Dio();
+
+    dynamic fromData= {
+      'email': "shakil.adn@gmail.com",
+      'password': "123456"
+    };
+
+    String path = httpService.baseUrl+"api/register";
+    var response = await dio.post(path,
+    data: fromData,
+    options: Options(headers: {
+      'accept': 'application/json',
+      'content-type': 'multipart/form-data',
+    }
+    ));
+    return response.data;
+  }
+
 }
