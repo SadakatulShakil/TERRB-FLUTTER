@@ -1,7 +1,10 @@
+import 'dart:convert';
+import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Api/UserResponse/single_user_entity.dart';
 import 'package:flutter_project/Api/http_service.dart';
+import 'package:flutter_project/Services/api_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class IndexSearch extends StatefulWidget {
@@ -14,6 +17,8 @@ class InitState extends State<IndexSearch> {
   TextEditingController nameController = TextEditingController();
   late HttpService httpService;
   late Dio dio = new Dio();
+
+  ApiService apiService = ApiService();
   @override
   Widget build(BuildContext context) {
     return initWidget();
@@ -58,12 +63,20 @@ class InitState extends State<IndexSearch> {
                       width: 100,
                       child: ElevatedButton(
 
-                        onPressed: (){
+                        onPressed: () async{
                           showToastMessage("Need to implement");
                           httpService = HttpService();
-                          getUser();
-                          postData();
-                          getApiData("new");
+                          var index_no = nameController.text.split("-")[1];
+                          print("Index: "+index_no);
+                          Map<String, dynamic> data = {
+                            "index_no" : index_no,
+                            "otp" : "1234"
+                          };
+                          var res = await apiService.Login(data);
+                          var mobile = jsonDecode(res)["data"]["mobile_no"];
+                          print("mobile: "+mobile.toString());
+                          /*getUser();
+                          postData();*/
 
                           /*if(type != null && doneBefore != null && doneBefore == 'no'){
                             //showToastMessage(type+" and "+doneBefore);
@@ -100,9 +113,6 @@ class InitState extends State<IndexSearch> {
     );
   }
 
-  getApiData(String s) {
-
-  }
   Future getUser() async  {
     Response response;
     try {
