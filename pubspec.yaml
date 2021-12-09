@@ -30,11 +30,13 @@ dependencies:
   progress_indicators: ^1.0.0
   font_awesome_flutter: ^9.2.0
   fluttertoast: ^8.0.8
-  webview_flutter: ^2.3.1
+  webview_flutter: ^3.0.0
   modal_progress_hud_nsn: ^0.1.0-nullsafety-1
   dio: ^4.0.4
   json_serializable: ^6.1.1
   http: ^0.13.4
+  pin_entry_text_field: ^0.1.4
+  shared_preferences: ^2.0.9
   flutter:
     sdk: flutter
 
@@ -71,6 +73,7 @@ flutter:
   assets:
    - images/app_logo.png
    - images/dipu_moni.jpg
+   - images/otp.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

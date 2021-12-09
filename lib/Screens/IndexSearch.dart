@@ -4,8 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Api/UserResponse/single_user_entity.dart';
 import 'package:flutter_project/Api/http_service.dart';
+import 'package:flutter_project/Screens/OtpScreen.dart';
 import 'package:flutter_project/Services/api_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IndexSearch extends StatefulWidget {
 
@@ -14,6 +16,23 @@ class IndexSearch extends StatefulWidget {
 }
 
 class InitState extends State<IndexSearch> {
+
+  showLoaderDialog(BuildContext context){
+    AlertDialog alert=AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Text("Loading..")
+        ],),
+    );
+    showDialog(barrierDismissible: false,
+      context:context,
+      builder:(BuildContext context){
+        return alert;
+      },
+    );
+  }
+
   TextEditingController nameController = TextEditingController();
   late HttpService httpService;
   late Dio dio = new Dio();
@@ -51,6 +70,7 @@ class InitState extends State<IndexSearch> {
                     child: TextField (
                       controller: nameController,
                       textAlign: TextAlign.center,
+                      textCapitalization: TextCapitalization.sentences,
                       decoration: InputDecoration(
                           contentPadding: EdgeInsets.symmetric(vertical: 3,horizontal: 5),
                           border: OutlineInputBorder(),
@@ -64,27 +84,35 @@ class InitState extends State<IndexSearch> {
                       child: ElevatedButton(
 
                         onPressed: () async{
+                          showLoaderDialog(context);
+                          FocusScope.of(context).unfocus();
+                          int min = 1000; //min and max values act as your 6 digit range
+                          int max = 9999;
+                          var randomizer = new Random();
+                          var rNum = min + randomizer.nextInt(max - min);
                           showToastMessage("Need to implement");
                           httpService = HttpService();
                           var index_no = nameController.text.split("-")[1];
-                          print("Index: "+index_no);
+                          print("Index & Otp: "+index_no+"...."+rNum.toString());
                           Map<String, dynamic> data = {
                             "index_no" : index_no,
-                            "otp" : "1234"
+                            "otp" : rNum.toString()
                           };
                           var res = await apiService.Login(data);
                           var mobile = jsonDecode(res)["data"]["mobile_no"];
+                          var token = jsonDecode(res)["data"]["token"];
+                          var name = jsonDecode(res)["data"]["name"];
+                          if(res.isEmpty){
+                            new Center(
+                                child: CircularProgressIndicator()
+                            );
+                          }else{
+                            saveLogInPref(mobile, token, name, rNum);
+                            /*Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => OtpVerify(mobile.toString(), rNum.toString())));*/
+                          }
                           print("mobile: "+mobile.toString());
-                          /*getUser();
-                          postData();*/
 
-                          /*if(type != null && doneBefore != null && doneBefore == 'no'){
-                            //showToastMessage(type+" and "+doneBefore);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterWebView()));
-                          }else if(type != null && doneBefore != null && doneBefore == 'yes'){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => IndexSearch()));
-                            showToastMessage("Need to go Index Search page !");
-                          }*/
                         },
                         style: ElevatedButton.styleFrom(
                             primary: new Color(0xFF29A74A),
@@ -113,44 +141,21 @@ class InitState extends State<IndexSearch> {
     );
   }
 
-  Future getUser() async  {
-    Response response;
-    try {
-      response = await httpService.getRequest("api/users/2");
-      print(response.statusCode.toString());
-      if(response.statusCode == 200){
-        setState(() {
-
-          SingleUserEntity singleUserEntity = SingleUserEntity.fromJson(response.data);
-          var data = singleUserEntity.toString();
-
-          print("New "'$data');
-
-        });
-      }else{
-        print("Something went wrong!");
-      }
-    } on Exception catch (e) {
-      print(e);
-    }
+  void saveLogInPref(mobile, token, name, rNum) {
+      setAllPref(mobile.toString(), token.toString(), name.toString(), rNum.toString()).then((bool committed){
+      Navigator.pop(context);
+      Navigator.push(context, MaterialPageRoute(builder: (context) => OtpVerify(mobile.toString(), rNum.toString())));
+    });
   }
-  Future postData()async{
-    Dio dio = new Dio();
 
-    dynamic fromData= {
-      'email': "shakil.adn@gmail.com",
-      'password': "123456"
-    };
+  Future<bool> setAllPref(String mobile, String token, String name, String otp) async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("token", token);
+    preferences.setString("mobile", mobile);
+    preferences.setString("name", name);
+    preferences.setString("otp", otp);
 
-    String path = httpService.baseUrl+"api/register";
-    var response = await dio.post(path,
-    data: fromData,
-    options: Options(headers: {
-      'accept': 'application/json',
-      'content-type': 'multipart/form-data',
-    }
-    ));
-    return response.data;
+    return preferences.commit();
   }
 
 }
