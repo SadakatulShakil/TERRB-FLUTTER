@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Model/member.dart';
+import 'package:flutter_project/Screens/DashBoard.dart';
 import 'package:flutter_project/Screens/MemberDetails.dart';
 import 'package:flutter_project/Screens/TeacherForm.dart';
 import 'package:flutter_project/helpers/utils.dart';
@@ -24,6 +25,22 @@ class InitState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text('অবসর'),
         backgroundColor: new Color(0xFF29A74A),
+        actions: [
+          PopupMenuButton<int>(
+            onSelected: (item) => onSelected(context, item),
+              itemBuilder: (context) =>[
+                PopupMenuItem<int>(
+                  value: 0,
+                    child: Text("DashBoard")
+                ),
+                PopupMenuItem<int>(
+                    value: 1,
+                    child: Text("Settings")
+                )
+              ]
+                  
+          )
+        ],
       ),
 
       floatingActionButton: FloatingActionButton.extended(
@@ -155,6 +172,13 @@ class InitState extends State<HomeScreen> {
         )
       ),
     );
+  }
+
+  onSelected(BuildContext context, int item) {
+    switch(item){
+      case 0:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> DashBoard()),);
+    }
   }
 }
 

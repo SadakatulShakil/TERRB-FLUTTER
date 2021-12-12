@@ -37,6 +37,7 @@ dependencies:
   http: ^0.13.4
   pin_entry_text_field: ^0.1.4
   shared_preferences: ^2.0.9
+  flutter_svg: ^1.0.0
   flutter:
     sdk: flutter
 
@@ -74,6 +75,9 @@ flutter:
    - images/app_logo.png
    - images/dipu_moni.jpg
    - images/otp.png
+   - icons/about.svg
+   - icons/notice.svg
+   - icons/review.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
