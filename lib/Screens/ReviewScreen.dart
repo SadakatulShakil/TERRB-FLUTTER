@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Api/http_service.dart';
+import 'package:flutter_project/Model/member.dart';
 import 'package:flutter_project/Services/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,23 +11,13 @@ State<StatefulWidget> createState() => InitState();
 }
 
 class InitState extends State<ReviewPage> {
-  String name="", token="", mobile="";
+  var name="", token, mobile="";
+  var res;
   late HttpService httpService;
   ApiService apiService = ApiService();
-  List<bool> numberTruthList = [true, true, true, true , true, true];
-  getSharedValue() async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    token = preferences.getString("token")!;
-    setState(() {
-      this.token = token;
-      print("token: "+ token);
-    });
-  }
 
   @override
   void initState(){
-    getSharedValue();
-
     getStatus();
     super.initState();
   }
@@ -63,7 +54,7 @@ return initWidget();
      borderRadius: BorderRadius.circular(10),
    ),
    child: ListTile(
-     title: Text("date"),
+     title: Text("Date"),
      subtitle: Text("Details of date"),
    ),
  );
@@ -71,12 +62,9 @@ return initWidget();
 
   void getStatus() async{
     httpService = HttpService();
-    Map<String, dynamic> data = {
-      "Authorization" : "Bearer "+ token,
-    };
-
-    var res = await apiService.CurrentStatus(data);
-
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    print("what Token: " + preferences.getString("token")!);
+    res = await apiService.CurrentStatus(preferences.getString("token")!);
     print("OutPut " +  res.toString());
   }
 
