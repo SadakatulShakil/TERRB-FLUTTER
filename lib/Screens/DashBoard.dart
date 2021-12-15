@@ -88,7 +88,7 @@ class InitState extends State<DashBoard>{
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset("icons/link.svg",
+                      SvgPicture.asset("icons/review.svg",
                           width: 24.0,
                           height: 24.0),
                       SizedBox(height: 30),
@@ -117,7 +117,7 @@ class InitState extends State<DashBoard>{
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset("icons/about.svg",
+                      SvgPicture.asset("icons/review.svg",
                           width: 24.0,
                           height: 24.0),
                       SizedBox(height: 30),
@@ -146,7 +146,7 @@ class InitState extends State<DashBoard>{
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset("icons/faq.svg",
+                      SvgPicture.asset("icons/review.svg",
                           width: 24.0,
                           height: 24.0),
                       SizedBox(height: 30),
@@ -175,7 +175,7 @@ class InitState extends State<DashBoard>{
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset("icons/contact.svg",
+                      SvgPicture.asset("icons/review.svg",
                           width: 24.0,
                           height: 24.0),
                       SizedBox(height: 30),
@@ -204,7 +204,7 @@ class InitState extends State<DashBoard>{
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset("icons/notice.svg",
+                      SvgPicture.asset("icons/review.svg",
                           width: 24.0,
                           height: 24.0),
                       SizedBox(height: 30),

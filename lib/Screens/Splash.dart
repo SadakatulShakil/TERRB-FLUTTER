@@ -14,8 +14,9 @@ class InitState extends State<Splash> {
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    print("running splash");
     startTimer();
+    super.initState();
   }
 
   startTimer() async{

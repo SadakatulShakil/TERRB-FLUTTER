@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Common/app_bar_home_page.dart';
 import 'package:flutter_project/Model/member.dart';
 import 'package:flutter_project/Screens/DashBoard.dart';
 import 'package:flutter_project/Screens/MemberDetails.dart';
@@ -17,23 +18,49 @@ class InitState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return initWidget();
+    return initWidget(context);
   }
 
-  Widget initWidget() {
+  Widget initWidget(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('অবসর'),
-        backgroundColor: new Color(0xFF29A74A),
+      appBar: AppBarUserLogin(context: context,),
+     /* AppBar(
+        title: Text('অবসর', style: TextStyle(shadows: [
+          Shadow(
+          color: Colors.black,
+          blurRadius: 10.0,
+          offset: Offset(3.0, 3.0),
+        )],
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold
+        )
+      ),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.green, Colors.red, Colors.green], stops: [0.1, 0.5, 0.9],
+            ),
+          ),
+        ),
         actions: [
           PopupMenuButton<int>(
-            onSelected: (item) => onSelected(context, item),
+              color: Colors.white.withOpacity(0.9),
+              elevation: 6.0,
+              shape: ContinuousRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
+              offset: Offset(0, 40),
+              icon: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Icon(Icons.menu),
+              ),
+              onSelected: (item) => onSelected(context, item),
               itemBuilder: (context) =>[
                 PopupMenuItem<int>(
                   value: 0,
-                    child: Text("DashBoard")
+                    child: Text("DashBoard"),
                 ),
-                PopupMenuItem<int>(
+                  PopupMenuItem<int>(
                     value: 1,
                     child: Text("Settings")
                 )
@@ -41,7 +68,7 @@ class InitState extends State<HomeScreen> {
                   
           )
         ],
-      ),
+      ),*/
 
       floatingActionButton: FloatingActionButton.extended(
         onPressed: (){
@@ -62,7 +89,7 @@ class InitState extends State<HomeScreen> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   childAspectRatio: MediaQuery.of(context).size.width /
-                      (MediaQuery.of(context).size.height/1.5),
+                      (MediaQuery.of(context).size.height/1.8),
                   mainAxisSpacing: 10, crossAxisSpacing: 5),
               itemBuilder: (context, index) {
                 return gridWidget(index);
@@ -137,18 +164,25 @@ class InitState extends State<HomeScreen> {
                     children: [
                       Align(
                         alignment: Alignment.topLeft,
-                        child: Text('বাণী,', style: TextStyle(color: Colors.black, fontSize: 12.0, fontWeight: FontWeight.bold)),
+                        child: Visibility(
+                            child: Text('বাণী,', style: TextStyle(color: Colors.black, fontSize: 12.0, fontWeight: FontWeight.bold)
+                            ),
+                          visible: false,
+                        ),
                       )
                     ],
                 ),
                 ),
                 new Padding(
                   padding: new EdgeInsets.only(left: 10.0, top: 0.0, right: 5.0, bottom: 5.0),
-                  child: new Text(
-                    memberList[index].quotes,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: new TextStyle(fontSize: 12.0,),
+                  child: Visibility(
+                    child: new Text(
+                      memberList[index].quotes,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: new TextStyle(fontSize: 12.0,),
+                    ),
+                    visible: false,
                   ),
                 ),
                 Container(
