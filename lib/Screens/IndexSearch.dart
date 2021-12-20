@@ -18,6 +18,10 @@ class IndexSearch extends StatefulWidget {
 
 class InitState extends State<IndexSearch> {
 
+  int _button_enable = 0;
+  List<Color> colorG = [Colors.green, Colors.red, Colors.green];
+  List<Color> colorS = [Colors.green.shade900, Colors.green.shade900, Colors.green.shade900];
+  List<Color> colorShade = [Colors.grey, Colors.grey, Colors.grey];
   showLoaderDialog(BuildContext context){
     AlertDialog alert=AlertDialog(
       content: new Row(
@@ -68,36 +72,69 @@ class InitState extends State<IndexSearch> {
                     ),
                   ),
                   new Padding(padding: new EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-                    child: RawKeyboardListener(
-                      child: TextField (
-                        maxLength: 12,
-                        controller: nameController,
-                        textAlign: TextAlign.center,
-                        textCapitalization: TextCapitalization.sentences,
-                        decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 3,horizontal: 5),
-                            border: OutlineInputBorder(),
-                            hintText: 'P-123456',
-                        ),
+                    child: TextField (
+                      maxLength: 12,
+                      controller: nameController,
+                      textAlign: TextAlign.center,
+                      textCapitalization: TextCapitalization.sentences,
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.symmetric(vertical: 3,horizontal: 5),
+                          border: OutlineInputBorder(),
+                          hintText: 'P-123456',
                       ),
-                      focusNode: FocusNode(),
-                      onKey: (RawKeyEvent event) {
-                        print("Value: "+nameController.text);
-
+                      onChanged: (String text) {
+                        if(text.length>7 && text.length<12){
+                          String letterOne = text[0];
+                          String letterTwo = text[1];
+                          RegExp regex = RegExp("[a-zA-Z]");
+                          if(regex.hasMatch(letterOne) && letterTwo == ("-")){
+                            _button_enable = 1;
+                          }
+                        }
                       },
                     ),
                   ),
                   new Padding(padding: new EdgeInsets.only(left: 16.0,top: 10.0, right: 16.0),
-                    /*child:InkWell(
-                      onTap: (){
+                    child:InkWell(
+                      onTap: () async{
                        ///Do login task
+                        if(_button_enable == 1){
+                          showLoaderDialog(context);
+                          FocusScope.of(context).unfocus();
+                          int min = 1000; //min and max values act as your 6 digit range
+                          int max = 9999;
+                          var randomizer = new Random();
+                          var rNum = min + randomizer.nextInt(max - min);
+                          showToastMessage("Need to implement");
+                          httpService = HttpService();
+                          var index_no = nameController.text.split("-")[1];
+                          print("Index & Otp: "+index_no+"...."+rNum.toString());
+                          Map<String, dynamic> data = {
+                            "index_no" : index_no,
+                            "otp" : rNum.toString()
+                          };
+                          var res = await apiService.Login(data);
+                          var mobile = jsonDecode(res)["data"]["mobile_no"];
+                          var token = jsonDecode(res)["data"]["token"];
+                          var name = jsonDecode(res)["data"]["name"];
+                          if(res.isEmpty){
+                            new Center(
+                                child: CircularProgressIndicator()
+                            );
+                          }else{
+                            saveLogInPref(mobile, token, name, rNum);
+                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => OtpVerify(mobile.toString(), rNum.toString())));
+                          }
+                          print("mobile: "+mobile.toString());
+                        }
                       },
                       child: Container(
                         width: 120,
                         decoration: new BoxDecoration(
-                            // gradient: LinearGradient(
-                            //   colors: (type != null && doneBefore != null) ? colorG : colorShade,
-                            // ),
+                            gradient: LinearGradient(
+                              colors: (_button_enable == 1) ? colorG : colorShade,
+                            ),
 
                             borderRadius: BorderRadius.all(Radius.circular(10.0))
                         ),
@@ -108,7 +145,7 @@ class InitState extends State<IndexSearch> {
                               Align(
                                 alignment: Alignment.center,
                                 child: new Text(
-                                  "ঠিক আছে",
+                                  "খুঁজুন",
                                   maxLines: 1,
                                   textAlign: TextAlign.center,
                                   style: new TextStyle(fontSize: 18.0,color: new Color(0xFFFFFFFF)),
@@ -118,8 +155,8 @@ class InitState extends State<IndexSearch> {
                           ),
                         ),
                       ),
-                    ),*/
-                    child:SizedBox(
+                    ),
+                    /*child:SizedBox(
                       width: 100,
                       child: ElevatedButton(
 
@@ -159,7 +196,7 @@ class InitState extends State<IndexSearch> {
                         ),
                         child: Text("খুঁজুন"),
                       ),
-                    ),
+                    ),*/
                   )
                 ],
               ),
