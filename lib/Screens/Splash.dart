@@ -25,9 +25,9 @@ class InitState extends State<Splash> {
   }
 
   homePageRoute(){
-   Navigator.pushReplacement(context, MaterialPageRoute(
-     builder: (context) => HomeScreen()
-   ));
+    Navigator.pushReplacement(context, MaterialPageRoute(
+        builder: (context) => HomeScreen()
+    ));
   }
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,28 @@ class InitState extends State<Splash> {
         children: [
           Center(
             child: Container(
+              margin:  EdgeInsets.only(bottom: 100.0),
               child: Image.asset("images/app_logo.png", width: 200, height: 200),
+            ),
+          ),
+          Center(
+            child: Container(
+              margin:  EdgeInsets.only(top: 150.0),
+              child: Stack(
+                children: [
+                  Text('অবসর', style: TextStyle(shadows: [
+                    Shadow(
+                      color: Colors.grey,
+                      blurRadius: 10.0,
+                      offset: Offset(3.0, 3.0),
+                    )],
+                      fontSize: 28.0,
+                      fontWeight: FontWeight.bold,
+                    color: new Color(0xFF29A74A)
+                  )
+                  )
+                ],
+              ),
             ),
           ),
           Container(
@@ -51,7 +72,7 @@ class InitState extends State<Splash> {
                   alignment: Alignment.bottomCenter,
                   child: JumpingDotsProgressIndicator(
                     fontSize: 50.0,
-                      numberOfDots: 5,
+                    numberOfDots: 5,
                     color: new Color(0xFF29A74A),
                     milliseconds: 120,
                   ),

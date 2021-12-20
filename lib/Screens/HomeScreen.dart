@@ -23,53 +23,7 @@ class InitState extends State<HomeScreen> {
 
   Widget initWidget(BuildContext context) {
     return Scaffold(
-      appBar: AppBarUserLogin(context: context,),
-     /* AppBar(
-        title: Text('অবসর', style: TextStyle(shadows: [
-          Shadow(
-          color: Colors.black,
-          blurRadius: 10.0,
-          offset: Offset(3.0, 3.0),
-        )],
-            fontSize: 25.0,
-            fontWeight: FontWeight.bold
-        )
-      ),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.green, Colors.red, Colors.green], stops: [0.1, 0.5, 0.9],
-            ),
-          ),
-        ),
-        actions: [
-          PopupMenuButton<int>(
-              color: Colors.white.withOpacity(0.9),
-              elevation: 6.0,
-              shape: ContinuousRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
-              offset: Offset(0, 40),
-              icon: Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(Icons.menu),
-              ),
-              onSelected: (item) => onSelected(context, item),
-              itemBuilder: (context) =>[
-                PopupMenuItem<int>(
-                  value: 0,
-                    child: Text("DashBoard"),
-                ),
-                  PopupMenuItem<int>(
-                    value: 1,
-                    child: Text("Settings")
-                )
-              ]
-                  
-          )
-        ],
-      ),*/
-
+      appBar: AppBarUserLogin(context: context),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: (){
           Text('Floting icon click');

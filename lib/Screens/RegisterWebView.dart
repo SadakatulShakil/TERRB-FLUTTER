@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:flutter_project/Common/app_bar_with_back_button.dart';
 import 'package:webview_flutter/webview_flutter.dart' show JavascriptMode, WebView;
 
 class RegisterWebView extends StatefulWidget {
@@ -16,10 +16,7 @@ class InitState extends State<RegisterWebView> {
 
   Widget initWidget() {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('অবসর'),
-        backgroundColor: new Color(0xFF29A74A),
-      ),
+      appBar: AppBarWithBackButton.appBarWithBack(),
      body: WebView(
        initialUrl: "http://apps.terbb.gov.bd/registration",
        javascriptMode: JavascriptMode.unrestricted,

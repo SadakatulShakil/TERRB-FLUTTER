@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Common/app_bar_with_back_button.dart';
 import 'package:flutter_project/Model/member.dart';
-import 'package:flutter_project/helpers/utils.dart';
 
 class MemberDetails extends StatelessWidget {
 
@@ -10,10 +10,7 @@ class MemberDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('অবসর'),
-        backgroundColor: new Color(0xFF29A74A),
-      ),
+      appBar: AppBarWithBackButton.appBarWithBack(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

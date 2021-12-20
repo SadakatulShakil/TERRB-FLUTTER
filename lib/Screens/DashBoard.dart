@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Common/app_bar_home_page.dart';
 import 'package:flutter_project/Screens/ReviewScreen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,10 +29,7 @@ class InitState extends State<DashBoard>{
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('অবসর'),
-        backgroundColor: new Color(0xFF29A74A),
-      ),
+      appBar: AppBarUserLogin(context: context),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: GridView.count(

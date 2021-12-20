@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project/Api/UserResponse/single_user_entity.dart';
 import 'package:flutter_project/Api/http_service.dart';
+import 'package:flutter_project/Common/app_bar_with_back_button.dart';
 import 'package:flutter_project/Screens/OtpScreen.dart';
 import 'package:flutter_project/Services/api_service.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,7 +23,10 @@ class InitState extends State<IndexSearch> {
       content: new Row(
         children: [
           CircularProgressIndicator(),
-          Text("Loading..")
+          Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text("Index searching.."),
+          )
         ],),
     );
     showDialog(barrierDismissible: false,
@@ -45,10 +49,7 @@ class InitState extends State<IndexSearch> {
 
   Widget initWidget() {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('অবসর'),
-        backgroundColor: new Color(0xFF29A74A),
-      ),
+      appBar: AppBarWithBackButton.appBarWithBack(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Stack(
@@ -67,18 +68,57 @@ class InitState extends State<IndexSearch> {
                     ),
                   ),
                   new Padding(padding: new EdgeInsets.only(left: 40.0, right: 40.0, top: 10.0),
-                    child: TextField (
-                      controller: nameController,
-                      textAlign: TextAlign.center,
-                      textCapitalization: TextCapitalization.sentences,
-                      decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(vertical: 3,horizontal: 5),
-                          border: OutlineInputBorder(),
-                          hintText: 'P-123456',
+                    child: RawKeyboardListener(
+                      child: TextField (
+                        maxLength: 12,
+                        controller: nameController,
+                        textAlign: TextAlign.center,
+                        textCapitalization: TextCapitalization.sentences,
+                        decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 3,horizontal: 5),
+                            border: OutlineInputBorder(),
+                            hintText: 'P-123456',
+                        ),
                       ),
+                      focusNode: FocusNode(),
+                      onKey: (RawKeyEvent event) {
+                        print("Value: "+nameController.text);
+
+                      },
                     ),
                   ),
                   new Padding(padding: new EdgeInsets.only(left: 16.0,top: 10.0, right: 16.0),
+                    /*child:InkWell(
+                      onTap: (){
+                       ///Do login task
+                      },
+                      child: Container(
+                        width: 120,
+                        decoration: new BoxDecoration(
+                            // gradient: LinearGradient(
+                            //   colors: (type != null && doneBefore != null) ? colorG : colorShade,
+                            // ),
+
+                            borderRadius: BorderRadius.all(Radius.circular(10.0))
+                        ),
+                        child: new Padding(
+                          padding: new EdgeInsets.all(5.0),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: new Text(
+                                  "ঠিক আছে",
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                  style: new TextStyle(fontSize: 18.0,color: new Color(0xFFFFFFFF)),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),*/
                     child:SizedBox(
                       width: 100,
                       child: ElevatedButton(
@@ -108,8 +148,8 @@ class InitState extends State<IndexSearch> {
                             );
                           }else{
                             saveLogInPref(mobile, token, name, rNum);
-                            /*Navigator.pop(context);
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => OtpVerify(mobile.toString(), rNum.toString())));*/
+                            Navigator.pop(context);
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => OtpVerify(mobile.toString(), rNum.toString())));
                           }
                           print("mobile: "+mobile.toString());
 

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project/Screens/DashBoard.dart';
+import 'package:flutter_project/Screens/HomeScreen.dart';
 import 'package:flutter_project/language/Languages%20.dart';
 import 'package:flutter_project/language/LocalConstant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -56,6 +58,10 @@ void choiceAction(context, choice) async {
   }
   else if(PopUpNavMenu.DashBoard == choice){
     ///Do logic for DashBoard page
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return DashBoard();
+    }));
   }
 }
 

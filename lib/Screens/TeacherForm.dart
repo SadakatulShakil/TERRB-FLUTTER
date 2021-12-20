@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_project/Common/app_bar_home_page.dart';
+import 'package:flutter_project/Common/app_bar_with_back_button.dart';
 import 'dart:developer';
 import 'package:flutter_project/Model/member.dart';
 import 'package:flutter_project/Screens/IndexSearch.dart';
@@ -16,9 +18,13 @@ class TeacherForm extends StatefulWidget {
 }
 
 class InitState extends State<TeacherForm> {
+  List<Color> colorG = [Colors.green, Colors.red, Colors.green];
+  List<Color> colorS = [Colors.green.shade900, Colors.green.shade900, Colors.green.shade900];
+  List<Color> colorShade = [Colors.grey, Colors.grey, Colors.grey];
   String isClick = "";
   var type, doneBefore;
   int val = -1;
+  bool _flag = false;
   @override
   Widget build(BuildContext context) {
     return initWidget();
@@ -26,10 +32,7 @@ class InitState extends State<TeacherForm> {
 
   Widget initWidget() {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('অবসর'),
-        backgroundColor: new Color(0xFF29A74A),
-      ),
+      appBar: AppBarWithBackButton.appBarWithBack(),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Stack(
@@ -60,7 +63,10 @@ class InitState extends State<TeacherForm> {
                       child: Container(
                         width: 250,
                         decoration: new BoxDecoration(
-                            color: isClick == 'school' ? new Color(0xFF005215) : new Color(0xFF29A74A),
+                            gradient: LinearGradient(
+                              colors: isClick == 'school' ? colorS : colorG,
+                            ),
+
                             borderRadius: BorderRadius.all(Radius.circular(10.0))
                         ),
                         child: new Padding(
@@ -93,7 +99,10 @@ class InitState extends State<TeacherForm> {
                       child: Container(
                         width: 250,
                         decoration: new BoxDecoration(
-                            color: isClick == 'college' ? new Color(0xFF005215) : new Color(0xFF29A74A),
+                            gradient: LinearGradient(
+                              colors: isClick == 'college' ? colorS : colorG,
+                            ),
+
                             borderRadius: BorderRadius.all(Radius.circular(10.0))
                         ),
                         child: new Padding(
@@ -119,39 +128,6 @@ class InitState extends State<TeacherForm> {
                     child: InkWell(
                       onTap: (){
                         setState(() {
-                          isClick = "karigori";
-                        });
-                        type = "কারিগরি";
-                      },
-                      child: Container(
-                        width: 250,
-                        decoration: new BoxDecoration(
-                            color: isClick == 'karigori' ? new Color(0xFF005215) : new Color(0xFF29A74A),
-                            borderRadius: BorderRadius.all(Radius.circular(10.0))
-                        ),
-                        child: new Padding(
-                          padding: new EdgeInsets.all(5.0),
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.center,
-                                  child: new Text(
-                                    "কারিগরি",
-                                    maxLines: 1,
-                                    textAlign: TextAlign.center,
-                                    style: new TextStyle(fontSize: 18.0,color: new Color(0xFFFFFFFF)),
-                                  ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  new Padding(padding: new EdgeInsets.only(left: 0.0, top: 8.0, right: 0.0, bottom: 8.0),
-                    child: InkWell(
-                      onTap: (){
-                        setState(() {
                           isClick = "madrasa";
                         });
                         setState(() {
@@ -161,7 +137,10 @@ class InitState extends State<TeacherForm> {
                       child: Container(
                         width: 250,
                         decoration: new BoxDecoration(
-                            color: isClick == 'madrasa' ? new Color(0xFF005215) : new Color(0xFF29A74A),
+                            gradient: LinearGradient(
+                              colors: isClick == 'madrasa' ? colorS : colorG,
+                            ),
+
                             borderRadius: BorderRadius.all(Radius.circular(10.0))
                         ),
                         child: new Padding(
@@ -183,12 +162,83 @@ class InitState extends State<TeacherForm> {
                       ),
                     ),
                   ),
+
+                  new Padding(padding: new EdgeInsets.only(left: 0.0, top: 8.0, right: 0.0, bottom: 8.0),
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          isClick = "schoolAndCollege";
+                        });
+                        setState(() {
+                        });
+                        type = "স্কুল এন্ড কলেজ";
+                      },
+                      child: Container(
+                        width: 250,
+                        decoration: new BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: isClick == 'schoolAndCollege' ? colorS : colorG,
+                            ),
+
+                            borderRadius: BorderRadius.all(Radius.circular(10.0))
+                        ),
+                        child: new Padding(
+                          padding: new EdgeInsets.all(5.0),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: new Text(
+                                  "স্কুল এন্ড কলেজ",
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                  style: new TextStyle(fontSize: 18.0,color: new Color(0xFFFFFFFF)),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  new Padding(padding: new EdgeInsets.only(left: 0.0, top: 8.0, right: 0.0, bottom: 8.0),
+                    child: InkWell(
+                      onTap: (){
+                        setState(() {
+                          isClick = "karigori";
+                        });
+                        type = "কারিগরি";
+                      },
+                      child: Container(
+                        width: 250,
+                        decoration: new BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: isClick == 'karigori' ? colorS : colorG,
+                            ),
+
+                            borderRadius: BorderRadius.all(Radius.circular(10.0))
+                        ),
+                        child: new Padding(
+                          padding: new EdgeInsets.all(5.0),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: new Text(
+                                  "কারিগরি",
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                  style: new TextStyle(fontSize: 18.0,color: new Color(0xFFFFFFFF)),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   new Padding(padding: new EdgeInsets.only(left: 0.0, top: 15.0, right: 0.0, bottom: 8.0),
                     child: Container(
-                     /* decoration: new BoxDecoration(
-                          color: new Color(0xFF29A74A),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))
-                      ),*/
                       child: new Padding(
                         padding: new EdgeInsets.all(5.0),
                         child: Stack(
@@ -238,31 +288,8 @@ class InitState extends State<TeacherForm> {
 
                   //submit button//
                   new Padding(padding: new EdgeInsets.only(left: 0.0, top: 15.0, right: 0.0, bottom: 8.0),
-                    /*child: Container(
-                      width: 150,
-                      decoration: new BoxDecoration(
-                          color: new Color(0xFF29A74A),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0))
-                      ),
-                      child: new Padding(
-                        padding: new EdgeInsets.all(5.0),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.center,
-                              child: new Text(
-                                "ঠিক আছে",
-                                maxLines: 1,
-                                textAlign: TextAlign.center,
-                                style: new TextStyle(fontSize: 18.0,color: new Color(0xFFFFFFFF)),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),*/
-                    child:ElevatedButton(
-                      onPressed: (){
+                    child:InkWell(
+                      onTap: (){
                         if(type != null && doneBefore != null && doneBefore == 'no'){
                           //showToastMessage(type+" and "+doneBefore);
                           Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterWebView()));
@@ -271,10 +298,32 @@ class InitState extends State<TeacherForm> {
                           showToastMessage("Need to go Index Search page !");
                         }
                       },
-                      style: ElevatedButton.styleFrom(
-                        primary: new Color(0xFF29A74A)
+                      child: Container(
+                        width: 120,
+                        decoration: new BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: (type != null && doneBefore != null) ? colorG : colorShade,
+                            ),
+
+                            borderRadius: BorderRadius.all(Radius.circular(10.0))
+                        ),
+                        child: new Padding(
+                          padding: new EdgeInsets.all(5.0),
+                          child: Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: new Text(
+                                  "ঠিক আছে",
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                  style: new TextStyle(fontSize: 18.0,color: new Color(0xFFFFFFFF)),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                      child: Text("ঠিক আছে"),
                     ),
                   ),
                 ],

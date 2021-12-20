@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Api/http_service.dart';
+import 'package:flutter_project/Common/app_bar_with_back_button.dart';
 import 'package:flutter_project/Model/Status.dart';
-import 'package:flutter_project/Model/member.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_project/Services/api_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,10 +34,7 @@ class InitState extends State<ReviewPage> {
 
   Widget initWidget() {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('অবসর'),
-        backgroundColor: new Color(0xFF29A74A),
-      ),
+      appBar: AppBarWithBackButton.appBarWithBack(),
       body: Container(
           child: Padding(
               padding: const EdgeInsets.only(
