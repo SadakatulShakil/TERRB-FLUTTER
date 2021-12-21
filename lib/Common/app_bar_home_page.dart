@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project/Screens/DashBoard.dart';
 import 'package:flutter_project/Screens/HomeScreen.dart';
+import 'package:flutter_project/Screens/ImportantLinkScreen.dart';
 import 'package:flutter_project/language/Languages%20.dart';
 import 'package:flutter_project/language/LocalConstant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -51,8 +52,10 @@ void choiceAction(context, choice) async {
   }else if(PopUpNavMenu.Contact == choice){
     ///Do logic for NoticeBoard page
   }else if(PopUpNavMenu.ImportantLink == choice){
-
     ///Do logic for NoticeBoard page
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return ImportantLink();
+    }));
   }else if(PopUpNavMenu.Faq == choice){
     ///Do logic for NoticeBoard page
   }
